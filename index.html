@@ -1,0 +1,519 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Employee Workplace Environment Questionnaire</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f6f8;
+  margin: 0;
+  padding: 10px;
+}
+
+.container {
+  max-width: 950px;
+  margin: auto;
+  background: #fff;
+  padding: 25px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.watermark {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+  max-width: 700px;
+  opacity: 0.05;
+  z-index: 0;
+  pointer-events: none;
+}
+
+form,
+.header,
+.title,
+.footer-note,
+.intro {
+  position: relative;
+  z-index: 1;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+  border-bottom: 2px solid #000;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+
+.logo img {
+  height: 100px;
+  max-width: 180px;
+  object-fit: contain;
+}
+
+.company-details {
+  text-align: right;
+  font-size: 12px;
+  line-height: 1.5;
+  max-width: 60%;
+}
+
+.title {
+  text-align: center;
+  font-size: 22px;
+  font-weight: bold;
+  margin: 20px 0 10px;
+}
+
+.subtitle {
+  text-align: center;
+  font-size: 14px;
+  color: #444;
+  margin-bottom: 20px;
+}
+
+.intro {
+  background: #f8f8f8;
+  border-left: 4px solid #000;
+  padding: 15px;
+  margin-bottom: 25px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+h2 {
+  font-size: 17px;
+  margin-top: 30px;
+  border-bottom: 1px solid #000;
+  padding-bottom: 8px;
+}
+
+.question {
+  margin-top: 25px;
+}
+
+.question-title {
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 12px;
+}
+
+.options label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  font-weight: normal;
+}
+
+textarea {
+  width: 100%;
+  min-height: 80px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  font-size: 14px;
+  resize: vertical;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type="text"] {
+  width: 100%;
+  border: 1px solid #ccc;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.employee-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+}
+
+.field label {
+  font-size: 12px;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.buttons {
+  margin-top: 30px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+button {
+  flex: 1;
+  padding: 14px;
+  border: none;
+  background: #000;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+.footer-note {
+  margin-top: 35px;
+  font-size: 11px;
+  text-align: center;
+  color: #666;
+}
+
+@media (max-width: 768px) {
+
+  .container {
+    padding: 15px;
+  }
+
+  .logo img {
+    height: 65px;
+  }
+
+  .company-details {
+    font-size: 10px;
+  }
+
+  .employee-info {
+    grid-template-columns: 1fr;
+  }
+
+  .options {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  button {
+    width: 100%;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container" id="formContent">
+
+  <img src="./watermark.png" class="watermark" alt="Watermark" />
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="logo">
+      <img src="logo.jpg" alt="Company Logo">
+    </div>
+
+    <div class="company-details">
+      <strong>Issaba Group</strong><br>
+      17 Essex Road, Vincent<br>
+      East London, South Africa<br>
+      Phone: 043 492 0519<br>
+      Email: hr@isintu.org.za
+    </div>
+  </div>
+
+  <div class="title">EMPLOYEE WORKPLACE ENVIRONMENT QUESTIONNAIRE</div>
+  <div class="subtitle">Uvavanyo Lwendawo Yokusebenza</div>
+
+  <div class="intro">
+    <strong>English:</strong><br>
+    The purpose of this questionnaire is to create a healthy and positive working environment for all employees of Issaba Group. We believe that a significant amount of our time is spent in the workplace, and it is therefore important that every employee feels motivated, valued, and supported when coming to work.<br><br>
+
+    Please note that this questionnaire is anonymous. We encourage you to answer honestly, as we rely on your feedback to identify challenges and implement meaningful improvements within the organisation.
+
+    <br><br>
+
+    <strong>isiXhosa:</strong><br>
+    Injongo yolu vavanyo kukuvelisa indawo yokusebenza enempilo nenentlonipho kubo bonke abasebenzi be-Issaba Group. Sikholelwa ukuba ixesha elininzi silichitha emsebenzini, ngoko kubalulekile ukuba wonke umsebenzi azive ekhuthazekile, exatyisiwe, kwaye exhaswa xa esiza emsebenzini.
+
+    <br><br>
+
+    Nceda uqaphele ukuba olu vavanyo alunamagama (anonymous). Siyakukhuthaza ukuba uphendule ngokunyaniseka, kuba sixhomekeke kwiimpendulo zenu ukuze sikwazi ukuchonga iingxaki nokwenza utshintsho oluyimfuneko emsebenzini.
+  </div>
+
+  <form>
+
+    <div class="employee-info">
+      <div class="field">
+        <label>Date</label>
+        <input type="text" placeholder="Enter date">
+      </div>
+
+      <div class="field">
+        <label>Department (Optional)</label>
+        <input type="text" placeholder="Enter department">
+      </div>
+    </div>
+
+    <!-- SECTION 1 -->
+    <h2>Section 1: General Work Environment / Icandelo 1</h2>
+
+    <div class="question">
+      <div class="question-title">
+        1. How would you describe the overall work environment? / Ungayichaza njani indawo yokusebenza?
+      </div>
+
+      <div class="options">
+        <label><input type="radio" name="q1"> Excellent</label>
+        <label><input type="radio" name="q1"> Good</label>
+        <label><input type="radio" name="q1"> Average</label>
+        <label><input type="radio" name="q1"> Poor</label>
+        <label><input type="radio" name="q1"> Very Poor</label>
+      </div>
+    </div>
+
+    <div class="question">
+      <div class="question-title">
+        2. Do you feel respected and valued at work? / Uziva uhlonitshwa kwaye uxatyisiwe emsebenzini?
+      </div>
+
+      <div class="options">
+        <label><input type="radio" name="q2"> Always</label>
+        <label><input type="radio" name="q2"> Sometimes</label>
+        <label><input type="radio" name="q2"> Rarely</label>
+        <label><input type="radio" name="q2"> Never</label>
+      </div>
+
+      <textarea placeholder="Comment / Chaza..."></textarea>
+    </div>
+
+    <div class="question">
+      <div class="question-title">
+        3. Do you feel comfortable expressing your concerns? / Uziva ukhululekile ukuveza izikhalazo zakho?
+      </div>
+
+      <div class="options">
+        <label><input type="radio" name="q3"> Yes</label>
+        <label><input type="radio" name="q3"> No</label>
+        <label><input type="radio" name="q3"> Sometimes</label>
+      </div>
+
+      <textarea placeholder="Comment / Chaza..."></textarea>
+    </div>
+
+    <div class="question">
+      <div class="question-title">
+        4. Have you experienced bullying, harassment, favoritism or discrimination? / Wakhe wajamelana nokuxhatshazwa okanye ukungalingani?
+      </div>
+
+      <textarea placeholder="Please explain / Nceda uchaze..."></textarea>
+    </div>
+
+    <!-- SECTION 2 -->
+    <h2>Section 2: Management & Leadership / Icandelo 2</h2>
+
+    <div class="question">
+      <div class="question-title">
+        5. How would you rate management’s leadership? / Ululinganisa njani ubunkokheli bolawulo?
+      </div>
+
+      <div class="options">
+        <label><input type="radio" name="q5"> Excellent</label>
+        <label><input type="radio" name="q5"> Good</label>
+        <label><input type="radio" name="q5"> Average</label>
+        <label><input type="radio" name="q5"> Poor</label>
+        <label><input type="radio" name="q5"> Very Poor</label>
+      </div>
+
+      <textarea placeholder="Comment / Chaza..."></textarea>
+    </div>
+
+    <div class="question">
+      <div class="question-title">
+        6. Do managers treat employees fairly? / Abaphathi baphatha abasebenzi ngokulinganayo?
+      </div>
+
+      <div class="options">
+        <label><input type="radio" name="q6"> Yes</label>
+        <label><input type="radio" name="q6"> No</label>
+        <label><input type="radio" name="q6"> Sometimes</label>
+      </div>
+
+      <textarea placeholder="Comment / Chaza..."></textarea>
+    </div>
+
+    <div class="question">
+      <div class="question-title">
+        7. Does management listen? / Ulawulo luyaphulaphula?
+      </div>
+
+      <div class="options">
+        <label><input type="radio" name="q7"> Yes</label>
+        <label><input type="radio" name="q7"> No</label>
+        <label><input type="radio" name="q7"> Sometimes</label>
+      </div>
+
+      <textarea placeholder="Comment / Chaza..."></textarea>
+    </div>
+
+    <div class="question">
+      <div class="question-title">
+        8. Have you felt intimidated by management? / Wakhe waziva usoyikiswa lulawulo?
+      </div>
+
+      <textarea placeholder="Please explain / Nceda uchaze..."></textarea>
+    </div>
+
+    <!-- SECTION 3 -->
+    <h2>Section 3: Communication / Icandelo 3</h2>
+
+    <div class="question">
+      <div class="question-title">
+        9. How effective is communication? / Unxibelelwano lusebenza kakuhle kangakanani?
+      </div>
+
+      <div class="options">
+        <label><input type="radio" name="q9"> Excellent</label>
+        <label><input type="radio" name="q9"> Good</label>
+        <label><input type="radio" name="q9"> Average</label>
+        <label><input type="radio" name="q9"> Poor</label>
+        <label><input type="radio" name="q9"> Very Poor</label>
+      </div>
+
+      <textarea placeholder="Comment / Chaza..."></textarea>
+    </div>
+
+    <div class="question">
+      <div class="question-title">
+        10. Do you receive clear instructions? / Uyafumana imiyalelo ecacileyo?
+      </div>
+
+      <div class="options">
+        <label><input type="radio" name="q10"> Yes</label>
+        <label><input type="radio" name="q10"> No</label>
+        <label><input type="radio" name="q10"> Sometimes</label>
+      </div>
+
+      <textarea placeholder="Comment / Chaza..."></textarea>
+    </div>
+
+    <!-- SECTION 4 -->
+    <h2>Section 4: Policies & Fairness / Icandelo 4</h2>
+
+    <div class="question">
+      <div class="question-title">
+        11. Are policies applied fairly? / Imigaqo isetyenziswa ngokulinganayo?
+      </div>
+
+      <div class="options">
+        <label><input type="radio" name="q11"> Yes</label>
+        <label><input type="radio" name="q11"> No</label>
+        <label><input type="radio" name="q11"> Sometimes</label>
+      </div>
+
+      <textarea placeholder="Comment / Chaza..."></textarea>
+    </div>
+
+    <div class="question">
+      <div class="question-title">
+        12. Do you feel safe reporting issues? / Uziva ukhuselekile ukuxela iingxaki?
+      </div>
+
+      <div class="options">
+        <label><input type="radio" name="q12"> Yes</label>
+        <label><input type="radio" name="q12"> No</label>
+        <label><input type="radio" name="q12"> Sometimes</label>
+      </div>
+
+      <textarea placeholder="Comment / Chaza..."></textarea>
+    </div>
+
+    <div class="question">
+      <div class="question-title">
+        13. Are disciplinary actions fair? / Izohlwayo zilungile?
+      </div>
+
+      <div class="options">
+        <label><input type="radio" name="q13"> Yes</label>
+        <label><input type="radio" name="q13"> No</label>
+        <label><input type="radio" name="q13"> Sometimes</label>
+      </div>
+
+      <textarea placeholder="Comment / Chaza..."></textarea>
+    </div>
+
+    <div class="buttons">
+      <button type="reset">Clear Form</button>
+      <button type="button" onclick="downloadPDF()">Download PDF</button>
+    </div>
+
+  </form>
+
+  <div class="footer-note">
+    This questionnaire is anonymous and confidential. Responses will be used only for workplace improvement purposes.
+  </div>
+
+</div>
+
+<script>
+async function downloadPDF() {
+  const { jsPDF } = window.jspdf;
+
+  const element = document.getElementById("formContent");
+
+  const canvas = await html2canvas(element, {
+    scale: 2,
+    useCORS: true
+  });
+
+  const imgData = canvas.toDataURL("image/png");
+
+  const pdf = new jsPDF("p", "mm", "a4");
+
+  const pdfWidth = pdf.internal.pageSize.getWidth();
+  const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+  let position = 0;
+  let heightLeft = pdfHeight;
+
+  pdf.addImage(imgData, "PNG", 0, position, pdfWidth, pdfHeight);
+  heightLeft -= pdf.internal.pageSize.getHeight();
+
+  while (heightLeft > 0) {
+    position = heightLeft - pdfHeight;
+    pdf.addPage();
+    pdf.addImage(imgData, "PNG", 0, position, pdfWidth, pdfHeight);
+    heightLeft -= pdf.internal.pageSize.getHeight();
+  }
+
+  pdf.save("workplace-environment-questionnaire.pdf");
+}
+</script>
+
+</body>
+</html>
+```
